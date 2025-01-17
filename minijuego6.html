@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minijuego 6: Adivina el Número</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #ff0066;
+        }
+
+        #gameArea {
+            width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+        }
+
+        input, button {
+            padding: 10px;
+            font-size: 1rem;
+            margin: 10px;
+        }
+
+        #score {
+            font-size: 1.5rem;
+            color: #ff0066;
+        }
+
+        button {
+            background-color: #ff0066;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        p {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Minijuego 6: Adivina el Número</h1>
+    <div id="gameArea">
+        <p>Adivina el número que he elegido entre 1 y 100</p>
+        <input type="number" id="guess" min="1" max="100" placeholder="Ingresa tu número" />
+        <button onclick="checkGuess()">Adivinar</button>
+        <p id="message"></p>
+        <p id="score">Intentos restantes: 10</p>
+    </div>
+
+    <script>
+        let targetNumber;
+        let attemptsLeft = 10;
+        const guessInput = document.getElementById('guess');
+        const message = document.getElementById('message');
+        const scoreDisplay = document.getElementById('score');
+
+       
+        targetNumber = 26; 
+        function startGame() {
+            attemptsLeft = 10;
+            scoreDisplay.textContent = `Intentos restantes: ${attemptsLeft}`;
+            message.textContent = '';
+        }
+
+        function checkGuess() {
+            const guess = parseInt(guessInput.value);
+
+            if (isNaN(guess)) {
+                message.textContent = 'Por favor, ingresa un número válido.';
+                return;
+            }
+
+            attemptsLeft--;
+
+            if (guess === targetNumber) {
+                message.textContent = 'Eres la persona que mas admiro en este mundo';
+                scoreDisplay.textContent = `Intentos restantes: 0`;
+            } else if (guess < targetNumber) {
+                message.textContent = 'El número es mayor. ¡Intenta de nuevo!';
+            } else {
+                message.textContent = 'El número es menor. ¡Intenta de nuevo!';
+            }
+
+            scoreDisplay.textContent = `Intentos restantes: ${attemptsLeft}`;
+
+            if (attemptsLeft <= 0 && guess !== targetNumber) {
+                message.textContent = '¡Te has quedado sin intentos! El número era: ' + targetNumber;
+                scoreDisplay.textContent = 'Intentos restantes: 0';
+            }
+        }
+
+        startGame(); 
+    </script>
+</body>
+</html>

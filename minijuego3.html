@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minijuego 3: Click Rápido</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #ff0066;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        h1 {
+            color: #ff0066;
+        }
+
+        p {
+            font-size: 1.5rem;
+        }
+
+        #clickButton {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <h1>Minijuego 3: Click Rápido</h1>
+    <p>Haz clic en el botón lo más rápido posible. ¡Cuando lo logres, aparecerá una frase especial!</p>
+    <button id="clickButton" onclick="clickButton()">Clic aquí</button>
+    <p id="clickCount">Clics: 0</p>
+    <script>
+        let clickCount = 0;
+        function clickButton() {
+            clickCount++;
+            document.getElementById('clickCount').textContent = "Clics: " + clickCount;
+            if (clickCount === 10) {
+                alert("Siempre serás mi razón para sonreír");
+            }
+        }
+    </script>
+</body>
+</html>

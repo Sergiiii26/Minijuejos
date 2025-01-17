@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minijuego 1: Contador</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #ff0066;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        h1 {
+            color: #ff0066;
+        }
+
+        p {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Minijuego 1: Contador</h1>
+    <p>Haz clic en el botón para ver el contador avanzar. ¡Al llegar a 10 se desbloquea una frase especial!</p>
+    <button id="counterButton">Contar</button>
+    <p id="counterDisplay">0</p>
+    <script>
+        let counter = 0;
+        const counterButton = document.getElementById('counterButton');
+        const counterDisplay = document.getElementById('counterDisplay');
+        
+        counterButton.onclick = function() {
+            counter++;
+            counterDisplay.textContent = counter;
+            if (counter === 10) {
+                alert("Eres mi sol, mi centro del universo");
+            }
+        };
+    </script>
+</body>
+</html>

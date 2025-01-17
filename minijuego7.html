@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minijuego 7: Recoge Corazones</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #ff0066;
+        }
+
+        #gameArea {
+            width: 400px;
+            height: 600px;
+            background-color: #f0f0f0;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .heart {
+            width: 40px;
+            height: 40px;
+            background-color: red;
+            clip-path: polygon(50% 0%, 0% 25%, 50% 100%, 100% 25%);
+            position: absolute;
+            animation: fall 2s linear infinite;
+        }
+
+        .basket {
+            width: 80px;
+            height: 40px;
+            background-color: #ff0066;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            margin-left: -40px;
+            border-radius: 10px;
+        }
+
+        #score {
+            font-size: 1.5rem;
+            color: #ff0066;
+        }
+
+        @keyframes fall {
+            0% {
+                top: 0;
+            }
+            100% {
+                top: 600px;
+            }
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #ff0066;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Minijuego 7: Recoge Corazones</h1>
+    <p>Clicka en los corazones antes de que se vayan, no seas feka</p>
+    <div id="gameArea">
+        <div class="basket" id="basket"></div>
+    </div>
+    <p id="score">Corazones: 0</p>
+    <button onclick="startGame()">Empezar Juego</button>
+    <p id="message"></p>
+
+    <script>
+        let heartsCollected = 0;
+        let gameInterval;
+        let heartInterval;
+        const basket = document.getElementById('basket');
+        const gameArea = document.getElementById('gameArea');
+        const scoreDisplay = document.getElementById('score');
+        const message = document.getElementById('message');
+
+        function startGame() {
+            heartsCollected = 0;
+            scoreDisplay.textContent = `Corazones: ${heartsCollected}`;
+            message.textContent = '';
+            clearInterval(gameInterval);
+            clearInterval(heartInterval);
+            gameInterval = setInterval(updateGame, 10);
+            heartInterval = setInterval(createHeart, 1000);
+        }
+
+        function updateGame() {
+            if (heartsCollected >= 10) {
+                clearInterval(gameInterval);
+                clearInterval(heartInterval);
+                message.textContent = 'Amo cada parte de ti, desde tu sonrisa hasta tu culito jijiji';
+            }
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = `${Math.random() * (gameArea.offsetWidth - 40)}px`;
+            gameArea.appendChild(heart);
+
+            heart.addEventListener('click', () => {
+                // El corazón se elimina correctamente
+                heart.remove();
+                // Aumentamos el contador
+                heartsCollected++;
+                // Actualizamos el marcador en pantalla
+                scoreDisplay.textContent = `Corazones: ${heartsCollected}`;
+            });
+
+            heart.addEventListener('animationiteration', () => {
+                // Si el corazón no es tocado y cae fuera del área, lo eliminamos
+                heart.remove();
+            });
+        }
+
+        document.addEventListener('keydown', function(e) {
+            const left = parseInt(basket.style.left || 0);
+            if (e.key === 'ArrowLeft' && left > 0) {
+                basket.style.left = `${left - 10}px`;
+            } else if (e.key === 'ArrowRight' && left < gameArea.offsetWidth - 80) {
+                basket.style.left = `${left + 10}px`;
+            }
+        });
+    </script>
+</body>
+</html>

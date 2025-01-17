@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minijuego 2: Adivina el número</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #ff0066;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        h1 {
+            color: #ff0066;
+        }
+
+        p {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Minijuego 2: Adivina el número</h1>
+    <p>Adivina el número entre 1 y 5. ¡Cuando lo adivines, te daré una frase especial!</p>
+    <input type="number" id="guess" min="1" max="5">
+    <button onclick="checkGuess()">Adivina</button>
+    <p id="result"></p>
+    <script>
+        const correctNumber = Math.floor(Math.random() * 5) + 1;
+        function checkGuess() {
+            const guess = document.getElementById('guess').value;
+            if (parseInt(guess) === correctNumber) {
+                document.getElementById('result').textContent = "Cuando estoy contigo siento que soy el hombre mas feliz del mundo";
+            } else {
+                document.getElementById('result').textContent = "Intenta de nuevo.";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minijuego 4: Encuentra la Pareja</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #ff0066;
+        }
+
+        .card {
+            width: 100px;
+            height: 100px;
+            background-color: #ff0066;
+            margin: 10px;
+            display: inline-block;
+            color: white;
+            font-size: 2rem;
+            line-height: 100px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .hidden {
+            background-color: #ccc;
+        }
+
+        #board {
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 450px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #ff0066;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Minijuego 4: Encuentra la Pareja</h1>
+    <p>Haz clic en las cartas para descubrir su contenido. Encuentra todas las parejas para ganar.</p>
+    <div id="board"></div>
+    <button onclick="startGame()">Empezar Juego</button>
+    <p id="message"></p>
+
+    <script>
+        let cards = ['A', 'B', 'C', 'D', 'A', 'B', 'C', 'D'];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let gameStarted = false;
+
+        function shuffle(cards) {
+            for (let i = cards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [cards[i], cards[j]] = [cards[j], cards[i]];
+            }
+            return cards;
+        }
+
+        function startGame() {
+            matchedPairs = 0;
+            flippedCards = [];
+            gameStarted = true;
+            cards = shuffle(cards);
+            const board = document.getElementById('board');
+            board.innerHTML = '';
+            for (let i = 0; i < cards.length; i++) {
+                const card = document.createElement('div');
+                card.classList.add('card', 'hidden');
+                card.dataset.value = cards[i];
+                card.onclick = () => flipCard(card);
+                board.appendChild(card);
+            }
+            document.getElementById('message').textContent = '';
+        }
+
+        function flipCard(card) {
+            if (!gameStarted || flippedCards.length === 2 || card.classList.contains('flipped')) {
+                return;
+            }
+
+            card.classList.remove('hidden');
+            card.textContent = card.dataset.value;
+            flippedCards.push(card);
+
+            if (flippedCards.length === 2) {
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            if (card1.dataset.value === card2.dataset.value) {
+                matchedPairs++;
+                if (matchedPairs === cards.length / 2) {
+                    document.getElementById('message').textContent = 'Te amo más cada día';
+                }
+            } else {
+                setTimeout(() => {
+                    card1.classList.add('hidden');
+                    card2.classList.add('hidden');
+                    card1.textContent = '';
+                    card2.textContent = '';
+                }, 1000);
+            }
+            flippedCards = [];
+        }
+
+        startGame();
+    </script>
+</body>
+</html>

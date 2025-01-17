@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minijuego 8: Trivia de Amor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #ff0066;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #ff0066;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        #question {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        #message {
+            font-size: 1.5rem;
+            color: #ff0066;
+        }
+    </style>
+</head>
+<body>
+    <h1>Minijuego 8: Trivia de Amor</h1>
+    <p>Responde correctamente a las preguntas sobre nuestra relación para desbloquear una frase especial.</p>
+    <div id="question">¿Dónde nos conocimos?</div>
+    <div id="answers">
+        <!-- Aquí se mostrarán las opciones dinámicas -->
+    </div>
+
+    <p id="message"></p>
+
+    <script>
+        const questions = [
+            { 
+                question: "¿Dónde nos dimos nuestro primer beso?", 
+                correctAnswer: 'En el parque', 
+                options: ['En el parque', 'En tu casa', 'En una fiesta']
+            },
+            { 
+                question: "¿Cuál es mi juego favorito?", 
+                correctAnswer: 'The Last Of Us', 
+                options: ['The Last Of Us', 'Rust', 'Fortnite']
+            },
+            { 
+                question: "¿Cuanto te quiero?", 
+                correctAnswer: 'Infinito', 
+                options: ['0', 'Mucho', 'Infinito']
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function showNextQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                const currentQuestion = questions[currentQuestionIndex];
+                document.getElementById('question').textContent = currentQuestion.question;
+
+                
+                shuffleArray(currentQuestion.options);
+
+                const answersDiv = document.getElementById('answers');
+                answersDiv.innerHTML = ''; 
+
+               
+                currentQuestion.options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.onclick = () => checkAnswer(option);
+                    answersDiv.appendChild(button);
+                });
+            } else {
+                document.getElementById('message').textContent = "Siempre seras el amor de mi vida, en esta y en todas las vidas";
+            }
+        }
+
+        function checkAnswer(answer) {
+            const correctAnswer = questions[currentQuestionIndex].correctAnswer;
+            if (answer === correctAnswer) {
+                currentQuestionIndex++;
+                showNextQuestion();
+            } else {
+                alert("Respuesta incorrecta. Intenta de nuevo.");
+            }
+        }
+
+        showNextQuestion();
+    </script>
+</body>
+</html>
